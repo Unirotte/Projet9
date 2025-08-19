@@ -11,6 +11,7 @@ const EventCard = ({
   label,
   small = false,
   ...props
+  
 }) => (
     <div
       data-testid="card-testid"
@@ -35,6 +36,7 @@ EventCard.propTypes = {
   title: PropTypes.string.isRequired,
   small: PropTypes.bool,
   label: PropTypes.string.isRequired,
+  
 };
 
 EventCard.defaultProps = {
