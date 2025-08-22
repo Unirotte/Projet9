@@ -20,6 +20,7 @@ const Slider = () => {
     return () => clearInterval(timer);
   }, [byDateDesc.length]);
 
+  
   return (
     <div className="SlideCardList">
       {byDateDesc.map((event, idx) => (
