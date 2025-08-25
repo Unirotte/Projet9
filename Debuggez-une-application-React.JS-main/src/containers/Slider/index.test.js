@@ -1,5 +1,6 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within, act } from "@testing-library/react";
 import Slider from "./index";
+import userEvent from "@testing-library/user-event";
 import { api, DataProvider } from "../../contexts/DataContext";
 
 const data = {
@@ -9,7 +10,7 @@ const data = {
       title: "World economic forum",
       description:
         "Oeuvre à la coopération entre le secteur public et le privé.",
-      date: "2022-02-29T20:28:45.744Z",
+      date: "2022-02-28T20:28:45.744Z",
       cover: "/images/evangeline-shaw-nwLTVwb7DbU-unsplash1.png",
     },
     {
@@ -28,20 +29,22 @@ const data = {
     },
   ],
 };
+function renderSlider() {
+  api.loadData = jest.fn().mockReturnValue(data);
+  return render(
+    <DataProvider>
+      <Slider />
+    </DataProvider>
+  );
+}
 
-describe("When slider is created", () => {
-  it("a list card is displayed", async () => {
-    window.console.error = jest.fn();
-    api.loadData = jest.fn().mockReturnValue(data);
-    render(
-      <DataProvider>
-        <Slider />
-      </DataProvider>
-    );
-    await screen.findByText("World economic forum");
-    await screen.findByText("janvier");
-    await screen.findByText(
-      "Oeuvre à la coopération entre le secteur public et le privé."
-    );
+describe("Slider - affiche initial", () => {
+  it("Affiche en premier l'évenement le plus récent", async () => {
+    renderSlider();
+
+    const heading = await screen.findByRole("heading", {
+      name: "World Gaming Day",
+    });
+    expect(heading).toBeInTheDocument();
   });
 });
